@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Chathura on 4/8/2019.     Edited by S.M.D.V.DHANANJAYA
  */
 @Controller
-@RequestMapping(path="/demo")
+@RequestMapping(path="/pizza")
 public class MainController {
     @Autowired
     private PizzaRepository pizzaRepository;
