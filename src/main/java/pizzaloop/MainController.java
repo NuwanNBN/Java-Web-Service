@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 /**
- * Created by Chathura on 4/8/2019.
+ * Created by Chathura on 4/8/2019.     Edited by S.M.D.V.DHANANJAYA
  */
 @Controller
 @RequestMapping(path="/demo")
@@ -44,11 +44,12 @@ public class MainController {
     * URI to access this: http://localhost:8080/demo/add?name=VegiPizza&description=VegiSupreme&price=2500.75
     */
     @GetMapping(path="/add")
-    public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price) {
+    public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price , @RequestParam String image_url) {
         PizzaDetails pizzaDetails = new PizzaDetails();
         pizzaDetails.setName(name);
         pizzaDetails.setDescription(description);
         pizzaDetails.setPrice(price);
+        pizzaDetails.setImage_url(image_url);
         pizzaRepository.save(pizzaDetails);
         return SUCCESS;
     }
@@ -71,7 +72,7 @@ public class MainController {
     * URI to access this: http://localhost:8080/demo/update?id=1&name=updatedname&description=updated&price=1234.56
     */
     @GetMapping(path="/update")
-    public @ResponseBody List<PizzaDetails> updatePizzaDetails(@RequestParam Integer id, @RequestParam String name, @RequestParam String description, @RequestParam Double price) {
+    public @ResponseBody List<PizzaDetails> updatePizzaDetails(@RequestParam Integer id, @RequestParam String name, @RequestParam String description, @RequestParam Double price ,@RequestParam String image_url) {
         //First get all the pizza details according to the provided ID
         List<PizzaDetails> pizzaDetailsList = pizzaRepository.findByPizzaId(id);
         if(!pizzaDetailsList.isEmpty()) {
@@ -81,6 +82,7 @@ public class MainController {
                 pizzaDetails.setName(name);
                 pizzaDetails.setDescription(description);
                 pizzaDetails.setPrice(price);
+                pizzaDetails.setImage_url(image_url);
                 //Update existing pizza item
                 pizzaRepository.save(pizzaDetails);
             }
