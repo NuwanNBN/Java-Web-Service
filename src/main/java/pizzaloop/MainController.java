@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 /**
- * Created by Chathura on 4/8/2019.     Edited by S.M.D.V.DHANANJAYA
+ * Created by Chathura on 4/8/2019.     Edited by W.M.N.B.Wijesooriya
  */
 @Controller
-@RequestMapping(path="/pizza")
+@RequestMapping(path="/demo")
 public class MainController {
     @Autowired
     private PizzaRepository pizzaRepository;
@@ -20,7 +20,7 @@ public class MainController {
     /*
     * READ Operation
     * This method will list all the pizzas in the table
-    * URI to access this: http://localhost:8080/demo/all
+    * URI to access this: http://localhost:8080/pizza/all
     */
     @GetMapping(path="/all")
     public @ResponseBody Iterable<PizzaDetails> getPizzaDetails() {
@@ -30,7 +30,7 @@ public class MainController {
     /*
     * READ Operation based on Pizza ID
     * This method will return the details of a pizza specified by the id
-    * URI to access this: http://localhost:8080/demo/findByPizzaId?id=2
+    * URI to access this: http://localhost:8080/pizza/findByPizzaId?id=2
     */
     @GetMapping(path="/findByPizzaId")
     public @ResponseBody List<PizzaDetails> getPizzaById(@RequestParam Integer id) {
@@ -41,15 +41,15 @@ public class MainController {
     * CREATE Operation
     * This method will crate new pizza item in the database table
     * and returns the SUCCESS message
-    * URI to access this: http://localhost:8080/demo/add?name=VegiPizza&description=VegiSupreme&price=2500.75
+    * URI to access this: http://localhost:8080/pizza/add?name=VegiPizza&description=VegiSupreme&price=2500.75
     */
     @GetMapping(path="/add")
-    public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price , @RequestParam String image_url) {
+    public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price , @RequestParam String imageUrl) {
         PizzaDetails pizzaDetails = new PizzaDetails();
         pizzaDetails.setName(name);
         pizzaDetails.setDescription(description);
         pizzaDetails.setPrice(price);
-        pizzaDetails.setImage_url(image_url);
+        pizzaDetails.setImageUrl(imageUrl);
         pizzaRepository.save(pizzaDetails);
         return SUCCESS;
     }
@@ -58,7 +58,7 @@ public class MainController {
     * DELETE Operation
     * This method will delete existing pizza item by finding it using the ID
     * and returns the deleted item
-    * URI to access this: http://localhost:8080/demo/deleteByPizzaId?id=2
+    * URI to access this: http://localhost:8080/pizza/deleteByPizzaId?id=2
     */
     @GetMapping(path="/deleteByPizzaId")
     public @ResponseBody List<PizzaDetails> deletePizzaById(@RequestParam Integer id) {
@@ -69,10 +69,10 @@ public class MainController {
     * UPDATE Operation
     * This method will update existing pizza details by finding it using the ID
     * and returns the updated data
-    * URI to access this: http://localhost:8080/demo/update?id=1&name=updatedname&description=updated&price=1234.56
+    * URI to access this: http://localhost:8080/pizza/update?id=1&name=updatedname&description=updated&price=1234.56
     */
     @GetMapping(path="/update")
-    public @ResponseBody List<PizzaDetails> updatePizzaDetails(@RequestParam Integer id, @RequestParam String name, @RequestParam String description, @RequestParam Double price ,@RequestParam String image_url) {
+    public @ResponseBody List<PizzaDetails> updatePizzaDetails(@RequestParam Integer id, @RequestParam String name, @RequestParam String description, @RequestParam Double price ,@RequestParam String imageUrl) {
         //First get all the pizza details according to the provided ID
         List<PizzaDetails> pizzaDetailsList = pizzaRepository.findByPizzaId(id);
         if(!pizzaDetailsList.isEmpty()) {
@@ -82,7 +82,7 @@ public class MainController {
                 pizzaDetails.setName(name);
                 pizzaDetails.setDescription(description);
                 pizzaDetails.setPrice(price);
-                pizzaDetails.setImage_url(image_url);
+                pizzaDetails.setImageUrl(imageUrl);
                 //Update existing pizza item
                 pizzaRepository.save(pizzaDetails);
             }
