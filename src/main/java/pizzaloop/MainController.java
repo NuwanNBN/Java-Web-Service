@@ -16,6 +16,10 @@ import java.util.List;
 public class MainController {
     @Autowired
     private PizzaRepository pizzaRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
     private static final String SUCCESS= "Saved";
     /*
     * READ Operation
@@ -25,6 +29,11 @@ public class MainController {
     @GetMapping(path="/all")
     public @ResponseBody Iterable<PizzaDetails> getPizzaDetails() {
         return pizzaRepository.findAll();
+    }
+
+    @GetMapping(path="/cart")
+    public @ResponseBody Iterable<Cart> getCart() {
+        return cartRepository.findAll();
     }
 
     /*
@@ -41,7 +50,7 @@ public class MainController {
     * CREATE Operation
     * This method will crate new pizza item in the database table
     * and returns the SUCCESS message
-    * URI to access this: http://localhost:8080/pizza/add?name=VegiPizza&description=VegiSupreme&price=2500.75
+    * URI to access this: http://localnamehost:8080/pizza/add?name=VegiPizza&description=VegiSupreme&price=2500.75
     */
     @GetMapping(path="/add")
     public @ResponseBody String addNewPizza(@RequestParam String name, @RequestParam String description, @RequestParam Double price , @RequestParam String imageUrl) {
@@ -54,6 +63,17 @@ public class MainController {
         return SUCCESS;
     }
 
+    //URI to access this: http://localhost:8080/cart/add?name=VegiPizza&imageUrl=VegiSupreme&price=2500.75
+    @GetMapping(path="/addCart")
+    public @ResponseBody String addNewCart(@RequestParam String name, @RequestParam String imageUrl, @RequestParam float price) {
+        Cart cart = new Cart();
+        cart.setPizzaName(name);
+        cart.setPizzaImageUrl(imageUrl);
+        cart.setPizzaPrice(price);
+        cartRepository.save(cart);
+        return SUCCESS;
+    }
+
     /*
     * DELETE Operation
     * This method will delete existing pizza item by finding it using the ID
@@ -63,6 +83,11 @@ public class MainController {
     @GetMapping(path="/deleteByPizzaId")
     public @ResponseBody List<PizzaDetails> deletePizzaById(@RequestParam Integer id) {
         return pizzaRepository.deleteByPizzaId(id);
+    }
+
+    @GetMapping(path="/deleteByCartId")
+    public @ResponseBody List<Cart> deleteCartById(@RequestParam Integer id) {
+        return cartRepository.deleteByCartId(id);
     }
 
     /*
